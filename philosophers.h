@@ -6,7 +6,7 @@
 /*   By: anisabel <anisabel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 23:28:18 by anisabel          #+#    #+#             */
-/*   Updated: 2026/07/03 00:13:16 by anisabel         ###   ########.fr       */
+/*   Updated: 2026/07/05 20:45:37 by anisabel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	*philo_cycle(void *arg);
 void	log_action(t_philo *philo, int action);
 void	*sim_watcher(void *tab);
 bool	check_death(t_philo *philo);
-int		end_sim(t_table *table);
+void	end_sim(t_table *table);
 bool	sim_active(t_table *table);
 bool	death_occurred(t_table *table);
 bool	all_ate(t_table *table);

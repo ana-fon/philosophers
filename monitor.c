@@ -6,7 +6,7 @@
 /*   By: anisabel <anisabel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 23:25:22 by anisabel          #+#    #+#             */
-/*   Updated: 2026/07/02 23:27:14 by anisabel         ###   ########.fr       */
+/*   Updated: 2026/07/05 20:51:52 by anisabel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,18 @@ bool	check_death(t_philo *philo)
 	return (elapsed > philo->config.die_time);
 }
 
-int	end_sim(t_table *table)
+/* int	end_sim(t_table *table)
 {
 	pthread_mutex_lock(&table->state_mutex);
 	table->active = false;
 	pthread_mutex_unlock(&table->state_mutex);
 	return (0);
+} */
+void	end_sim(t_table *table)
+{
+	pthread_mutex_lock(&table->state_mutex);
+	table->active = false;
+	pthread_mutex_unlock(&table->state_mutex);
 }
 
 bool	sim_active(t_table *table)
@@ -61,7 +67,7 @@ bool	death_occurred(t_table *table)
 	return (false);
 }
 
-bool	all_ate(t_table *table)
+/* bool	all_ate(t_table *table)
 {
 	t_philo	*philo;
 	bool	full;
@@ -86,6 +92,33 @@ bool	all_ate(t_table *table)
 	if (full)
 		end_sim(table);
 	return (full);
+} */
+
+bool    all_ate(t_table *table)
+{
+    t_philo *philo;
+    int     i;
+
+    if (table->philos->config.meal_limit == -1)
+        return (false);
+    philo = table->philos;
+    i = 0;
+    while (i < table->count)
+    {
+        pthread_mutex_lock(&philo->config.meal_mutex);
+        // Se encontrarmos APENAS UM filósofo que NÃO está cheio
+        if (!philo->is_full)
+        {
+            pthread_mutex_unlock(&philo->config.meal_mutex);
+            return (false); // Para tudo e continua a simulação
+        }
+        pthread_mutex_unlock(&philo->config.meal_mutex);
+        philo = philo->next;
+        i++;
+    }
+    // Se o loop terminou, significa que passámos por todos e NENHUM falhou
+    end_sim(table);
+    return (true);
 }
 
 void	*sim_watcher(void *tab)

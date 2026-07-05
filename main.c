@@ -6,7 +6,7 @@
 /*   By: anisabel <anisabel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 23:25:29 by anisabel          #+#    #+#             */
-/*   Updated: 2026/07/02 23:26:58 by anisabel         ###   ########.fr       */
+/*   Updated: 2026/07/05 21:05:22 by anisabel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,4 @@ int	main(int ac, char **av)
 	clear_philos(&table.philos);
 	pthread_mutex_destroy(&table.write_mutex);
 	pthread_mutex_destroy(&table.state_mutex);
-	return (0);
 }
