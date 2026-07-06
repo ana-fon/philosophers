@@ -12,17 +12,24 @@
 
 #include "philosophers.h"
 
-static bool	all_digits(const char *s)
+static bool	valid_arg(const char *s)
 {
+	int		len;
+	long	val;
+
+	len = 0;
 	if (!*s)
 		return (false);
-	while (*s)
+	while (s[len])
 	{
-		if (!ft_isdigit(*s))
+		if (!ft_isdigit(s[len]))
 			return (false);
-		s++;
+		len++;
 	}
-	return (true);
+	if (len > 10)
+		return (false);
+	val = ft_atol(s);
+	return (val > 0 && val <= INT_MAX);
 }
 
 bool	parse_args(int ac, char **av, t_table *table)
@@ -31,47 +38,50 @@ bool	parse_args(int ac, char **av, t_table *table)
 
 	if (ac < 5 || ac > 6)
 	{
-		printf("Usage: %s number_of_philosophers ", av[0]);
-		printf("time_to_die time_to_eat time_to_sleep ");
-		printf("[number_of_times_each_philosopher_must_eat]\n");
+		printf("Error: invalid number of arguments\n");
 		return (false);
 	}
-	i = 1;
-	while (i < ac)
+	i = 0;
+	while (++i < ac)
 	{
-		if (!all_digits(av[i]))
+		if (!valid_arg(av[i]))
 		{
-			printf("Error: arguments must be positive integers\n");
+			printf("Error: invalid argument value\n");
 			return (false);
 		}
-		i++;
 	}
 	table->count = ft_atoi(av[1]);
-	if (table->count <= 0)
-		return (printf("Error: philosophers count must be positive\n"), false);
+	return (true);
+}
+
+static bool	start_threads(t_table *table)
+{
+	t_philo	*philo;
+	int		i;
+
+	philo = table->philos;
+	i = 0;
+	while (i < table->count)
+	{
+		if (pthread_create(&philo->thread, NULL, philo_cycle, philo))
+			return (false);
+		philo = philo->next;
+		i++;
+	}
+	if (pthread_create(&table->watcher, NULL, sim_watcher, table))
+		return (false);
 	return (true);
 }
 
 int	main(int ac, char **av)
 {
 	t_table	table;
-	t_philo	*philo;
-	int		i;
 
 	if (!parse_args(ac, av, &table))
 		return (1);
 	if (!init_sim(&table, av))
 		return (1);
-	philo = table.philos;
-	i = 0;
-	while (i < table.count)
-	{
-		if (pthread_create(&philo->thread, NULL, philo_cycle, philo))
-			return (1);
-		philo = philo->next;
-		i++;
-	}
-	if (pthread_create(&table.watcher, NULL, sim_watcher, &table))
+	if (!start_threads(&table))
 		return (1);
 	join_all(&table);
 	clear_philos(&table.philos);
