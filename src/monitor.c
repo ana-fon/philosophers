@@ -6,7 +6,7 @@
 /*   By: anisabel <anisabel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 23:25:22 by anisabel          #+#    #+#             */
-/*   Updated: 2026/07/06 16:43:46 by anisabel         ###   ########.fr       */
+/*   Updated: 2026/07/06 18:57:45 by anisabel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,3 @@ bool	all_ate(t_table *table)
 	end_sim(table);
 	return (true);
 }
-
-

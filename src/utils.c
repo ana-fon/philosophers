@@ -6,7 +6,7 @@
 /*   By: anisabel <anisabel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/02 23:25:35 by anisabel          #+#    #+#             */
-/*   Updated: 2026/07/02 23:29:31 by anisabel         ###   ########.fr       */
+/*   Updated: 2026/07/06 18:57:36 by anisabel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,3 @@ long	time_ms(void)
 	time = (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 	return (time);
 }
-
-
