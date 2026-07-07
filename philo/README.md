@@ -117,8 +117,6 @@ AI was used for the following tasks and parts of the project:
 
 1. **Algorithm Design & Deadlock Avoidance Strategy**: AI assisted in implementing the resource hierarchy solution by ensuring philosophers acquire forks in a consistent order (even-numbered philosophers take left fork first, odd-numbered take right fork first) to prevent circular wait conditions.
 
-2. **Code Structure & Optimization**: AI helped structure the codebase into modular components (`init.c`, `actions.c`, `monitor.c`, `utils.c`) and provided optimization suggestions for the philosopher cycle logic.
-
 ## Technical Choices
 
 - **Even/Odd Fork Acquisition**: To avoid deadlocks, philosophers with even IDs take their own fork first (left), then the next philosopher's fork (right). Odd-numbered philosophers reverse this order.
