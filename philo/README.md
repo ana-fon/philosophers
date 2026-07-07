@@ -113,8 +113,6 @@ The program outputs timestamped logs for each philosopher's action:
 
 ### AI Usage
 
-AI was used for the following tasks and parts of the project:
-
 **Algorithm Design & Deadlock Avoidance Strategy**: AI assisted in implementing the resource hierarchy solution by ensuring philosophers acquire forks in a consistent order (even-numbered philosophers take left fork first, odd-numbered take right fork first) to prevent circular wait conditions.
 
 ## Technical Choices
